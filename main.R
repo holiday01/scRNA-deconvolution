@@ -1,11 +1,11 @@
 ## scRNA-seq GEX save
-write.csv(as.character(pbmc@active.ident),"~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/meta.csv")
-write.csv(as.matrix(pbmc@assays$RNA$scale.data),"~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/exp.csv")
+write.csv(as.character(pbmc@active.ident),"./filtered_gene_bc_matrices/meta.csv")
+write.csv(as.matrix(pbmc@assays$RNA$scale.data),"./filtered_gene_bc_matrices/exp.csv")
 
 ## BUILD deconvolution dataset
 
-cell <- read.csv("~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/meta.csv")
-exp <- read.csv("~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/exp.csv")
+cell <- read.csv("./filtered_gene_bc_matrices/meta.csv")
+exp <- read.csv("./filtered_gene_bc_matrices/exp.csv")
 rownames(exp) <- exp$X
 exp <- exp[,-1]
 ucell <- unique(cell$x)
@@ -16,13 +16,13 @@ for(n in ucell){
   ref <- cbind(ref, out)
 }
 colnames(ref) <- ucell
-write.csv(ref,"~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/ref.csv")
+write.csv(ref,"./filtered_gene_bc_matrices/ref.csv")
 
 ## Deconvolution method
-ref <- read.csv("~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/ref.csv")
+ref <- read.csv("./filtered_gene_bc_matrices/ref.csv")
 rownames(ref) <- ref$X
 ref <- ref[,-1]
-pre <- read.csv("~/Documents/2023_work/2023_lab_course/ym/scRNA-seq/filtered_gene_bc_matrices/tumor.csv")
+pre <- read.csv("./filtered_gene_bc_matrices/tumor.csv")
 pre <- pre[!duplicated(pre$X), ]
 gene <- pre$X
 pre <- as.matrix(pre[,-1])
